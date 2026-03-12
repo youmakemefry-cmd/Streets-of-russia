@@ -92,70 +92,53 @@ class HUD {
         if (!scene.sys.game.device.input.touch) return;
         
         // D-pad
-        const padX = 80, padY = GAME_HEIGHT - 50;
-        const padSize = 30;
+        const padX = 60, padY = GAME_HEIGHT - 50;
+        const padSize = 28;
         const padAlpha = 0.3;
         
-        // Up
-        this.btnUp = scene.add.rectangle(padX, padY - padSize, padSize, padSize, 0xffffff, padAlpha)
-            .setInteractive().setScrollFactor(0);
-        // Down
-        this.btnDown = scene.add.rectangle(padX, padY + padSize, padSize, padSize, 0xffffff, padAlpha)
-            .setInteractive().setScrollFactor(0);
-        // Left
-        this.btnLeft = scene.add.rectangle(padX - padSize, padY, padSize, padSize, 0xffffff, padAlpha)
-            .setInteractive().setScrollFactor(0);
-        // Right
-        this.btnRight = scene.add.rectangle(padX + padSize, padY, padSize, padSize, 0xffffff, padAlpha)
-            .setInteractive().setScrollFactor(0);
+        // Создаем кнопки
+        this.btnUp = scene.add.rectangle(padX, padY - padSize, padSize, padSize, 0xffffff, padAlpha).setInteractive().setScrollFactor(0);
+        this.btnDown = scene.add.rectangle(padX, padY + padSize, padSize, padSize, 0xffffff, padAlpha).setInteractive().setScrollFactor(0);
+        this.btnLeft = scene.add.rectangle(padX - padSize, padY, padSize, padSize, 0xffffff, padAlpha).setInteractive().setScrollFactor(0);
+        this.btnRight = scene.add.rectangle(padX + padSize, padY, padSize, padSize, 0xffffff, padAlpha).setInteractive().setScrollFactor(0);
         
-        // Attack button
-        this.btnAttack = scene.add.circle(GAME_WIDTH - 50, GAME_HEIGHT - 50, 22, 0xff4444, padAlpha)
-            .setInteractive().setScrollFactor(0);
-        scene.add.text(GAME_WIDTH - 50, GAME_HEIGHT - 50, 'A', {
-            fontSize: '14px', fill: '#fff'
-        }).setOrigin(0.5).setScrollFactor(0).setDepth(5001);
+        this.btnAttack = scene.add.circle(GAME_WIDTH - 50, GAME_HEIGHT - 50, 22, 0xff4444, padAlpha).setInteractive().setScrollFactor(0);
+        scene.add.text(GAME_WIDTH - 50, GAME_HEIGHT - 50, 'A', { fontSize: '14px', fill: '#fff' }).setOrigin(0.5).setScrollFactor(0).setDepth(5001);
         
-        // Special button
-        this.btnSpecial = scene.add.circle(GAME_WIDTH - 90, GAME_HEIGHT - 35, 18, 0x4444ff, padAlpha)
-            .setInteractive().setScrollFactor(0);
-        scene.add.text(GAME_WIDTH - 90, GAME_HEIGHT - 35, 'S', {
-            fontSize: '12px', fill: '#fff'
-        }).setOrigin(0.5).setScrollFactor(0).setDepth(5001);
+        this.btnSpecial = scene.add.circle(GAME_WIDTH - 90, GAME_HEIGHT - 35, 18, 0x4444ff, padAlpha).setInteractive().setScrollFactor(0);
+        scene.add.text(GAME_WIDTH - 90, GAME_HEIGHT - 35, 'S', { fontSize: '12px', fill: '#fff' }).setOrigin(0.5).setScrollFactor(0).setDepth(5001);
         
-        // Pickup button
-        this.btnPickup = scene.add.circle(GAME_WIDTH - 90, GAME_HEIGHT - 70, 18, 0x44ff44, padAlpha)
-            .setInteractive().setScrollFactor(0);
-        scene.add.text(GAME_WIDTH - 90, GAME_HEIGHT - 70, 'P', {
-            fontSize: '12px', fill: '#fff'
-        }).setOrigin(0.5).setScrollFactor(0).setDepth(5001);
-        
-        [this.btnUp, this.btnDown, this.btnLeft, this.btnRight, this.btnAttack, this.btnSpecial, this.btnPickup].forEach(b => {
-            ui.add(b);
-            b.setDepth(5001);
-        });
+        this.btnPickup = scene.add.circle(GAME_WIDTH - 90, GAME_HEIGHT - 70, 18, 0x44ff44, padAlpha).setInteractive().setScrollFactor(0);
+        scene.add.text(GAME_WIDTH - 90, GAME_HEIGHT - 70, 'P', { fontSize: '12px', fill: '#fff' }).setOrigin(0.5).setScrollFactor(0).setDepth(5001);
         
         // Virtual input state
         scene.virtualInput = { up: false, down: false, left: false, right: false, attack: false, special: false, pickup: false };
         
-        this.btnUp.on('pointerdown', () => scene.virtualInput.up = true);
-        this.btnUp.on('pointerup', () => scene.virtualInput.up = false);
-        this.btnUp.on('pointerout', () => scene.virtualInput.up = false);
-        this.btnDown.on('pointerdown', () => scene.virtualInput.down = true);
-        this.btnDown.on('pointerup', () => scene.virtualInput.down = false);
-        this.btnDown.on('pointerout', () => scene.virtualInput.down = false);
-        this.btnLeft.on('pointerdown', () => scene.virtualInput.left = true);
-        this.btnLeft.on('pointerup', () => scene.virtualInput.left = false);
-        this.btnLeft.on('pointerout', () => scene.virtualInput.left = false);
-        this.btnRight.on('pointerdown', () => scene.virtualInput.right = true);
-        this.btnRight.on('pointerup', () => scene.virtualInput.right = false);
-        this.btnRight.on('pointerout', () => scene.virtualInput.right = false);
-        this.btnAttack.on('pointerdown', () => scene.virtualInput.attack = true);
-        this.btnAttack.on('pointerup', () => scene.virtualInput.attack = false);
-        this.btnSpecial.on('pointerdown', () => scene.virtualInput.special = true);
-        this.btnSpecial.on('pointerup', () => scene.virtualInput.special = false);
-        this.btnPickup.on('pointerdown', () => scene.virtualInput.pickup = true);
-        this.btnPickup.on('pointerup', () => scene.virtualInput.pickup = false);
+        // Массив для компактной и надежной привязки событий
+        const buttons = [
+            { btn: this.btnUp, key: 'up' },
+            { btn: this.btnDown, key: 'down' },
+            { btn: this.btnLeft, key: 'left' },
+            { btn: this.btnRight, key: 'right' },
+            { btn: this.btnAttack, key: 'attack' },
+            { btn: this.btnSpecial, key: 'special' },
+            { btn: this.btnPickup, key: 'pickup' }
+        ];
+
+        buttons.forEach(item => {
+            ui.add(item.btn);
+            item.btn.setDepth(5001);
+
+            // Нажатие
+            item.btn.on('pointerdown', () => { scene.virtualInput[item.key] = true; });
+            
+            // Универсальная функция сброса при любом виде отпускания
+            const release = () => { scene.virtualInput[item.key] = false; };
+            
+            item.btn.on('pointerup', release);
+            item.btn.on('pointerout', release);
+            item.btn.on('pointercancel', release); // Спасает от зависаний на тачскрине
+        });
     }
 
     update(player, boss) {
