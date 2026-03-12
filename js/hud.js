@@ -138,26 +138,24 @@ class HUD {
         // Virtual input state
         scene.virtualInput = { up: false, down: false, left: false, right: false, attack: false, special: false, pickup: false };
         
-        // Исправленный блок событий (без залипаний)
-        const buttons = [
-            { btn: this.btnUp, key: 'up' },
-            { btn: this.btnDown, key: 'down' },
-            { btn: this.btnLeft, key: 'left' },
-            { btn: this.btnRight, key: 'right' },
-            { btn: this.btnAttack, key: 'attack' },
-            { btn: this.btnSpecial, key: 'special' },
-            { btn: this.btnPickup, key: 'pickup' }
-        ];
-
-        buttons.forEach(item => {
-            item.btn.on('pointerdown', () => { scene.virtualInput[item.key] = true; });
-            
-            const release = () => { scene.virtualInput[item.key] = false; };
-            
-            item.btn.on('pointerup', release);
-            item.btn.on('pointerout', release);
-            item.btn.on('pointercancel', release); // <- Ключевой фикс
-        });
+        this.btnUp.on('pointerdown', () => scene.virtualInput.up = true);
+        this.btnUp.on('pointerup', () => scene.virtualInput.up = false);
+        this.btnUp.on('pointerout', () => scene.virtualInput.up = false);
+        this.btnDown.on('pointerdown', () => scene.virtualInput.down = true);
+        this.btnDown.on('pointerup', () => scene.virtualInput.down = false);
+        this.btnDown.on('pointerout', () => scene.virtualInput.down = false);
+        this.btnLeft.on('pointerdown', () => scene.virtualInput.left = true);
+        this.btnLeft.on('pointerup', () => scene.virtualInput.left = false);
+        this.btnLeft.on('pointerout', () => scene.virtualInput.left = false);
+        this.btnRight.on('pointerdown', () => scene.virtualInput.right = true);
+        this.btnRight.on('pointerup', () => scene.virtualInput.right = false);
+        this.btnRight.on('pointerout', () => scene.virtualInput.right = false);
+        this.btnAttack.on('pointerdown', () => scene.virtualInput.attack = true);
+        this.btnAttack.on('pointerup', () => scene.virtualInput.attack = false);
+        this.btnSpecial.on('pointerdown', () => scene.virtualInput.special = true);
+        this.btnSpecial.on('pointerup', () => scene.virtualInput.special = false);
+        this.btnPickup.on('pointerdown', () => scene.virtualInput.pickup = true);
+        this.btnPickup.on('pointerup', () => scene.virtualInput.pickup = false);
     }
 
     update(player, boss) {
