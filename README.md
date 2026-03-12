@@ -3,6 +3,9 @@
 **Серёга**, обычный чувак из 90-х. Он просто пытается добраться домой через криминальный район.
 <img width="1648" height="925" alt="image" src="https://github.com/user-attachments/assets/7785e671-08ae-4e33-bf2a-4c1fed7fc6a5" />
 
+<a href="https://github.com/user-attachments/assets/7785e671-08ae-4e33-bf2a-4c1fed7fc6a5">
+  <img src="https://github.com/user-attachments/assets/7785e671-08ae-4e33-bf2a-4c1fed7fc6a5" width="300" alt="скриншот навигации"/>
+</a>
 
 ---
 
