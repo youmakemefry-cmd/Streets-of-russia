@@ -92,8 +92,8 @@ class HUD {
         if (!scene.sys.game.device.input.touch) return;
         
         // D-pad
-        const padX = 60, padY = GAME_HEIGHT - 50;
-        const padSize = 28;
+        const padX = 80, padY = GAME_HEIGHT - 50;
+        const padSize = 30;
         const padAlpha = 0.3;
         
         // Up
